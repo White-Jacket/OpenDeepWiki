@@ -1,6 +1,5 @@
 ﻿services:
   koalawiki:
-    image: crpi-j9ha7sxwhatgtvj4.cn-shenzhen.personal.cr.aliyuncs.com/koala-ai/koala-wiki
     environment:
       - KOALAWIKI_REPOSITORIES=/repositories
       - TASK_MAX_SIZE_PER_USER=5 # 每个用户AI处理文档生成的最大数量
@@ -25,7 +24,7 @@
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://aspire-dashboard:18889
     ports:
-        - "8080:8080"
+        - "${FRONT_PORT}:8080"
     volumes:
       - ./repositories:/app/repositories
       - ./data:/data
@@ -37,8 +36,6 @@
     image: mcr.microsoft.com/dotnet/aspire-dashboard
     container_name: aspire-dashboard
     restart: always
-    ports:
-      - "18888:18888"
     environment:
       - TZ=Asia/Shanghai
       - Dashboard:ApplicationName=Aspire
